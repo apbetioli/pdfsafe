@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     page: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
-        minHeight: 300
+        minHeight: 200
     },
     alignRight: {
         textAlign: 'right'
@@ -96,6 +96,7 @@ export function Wizard() {
                         }}
                         acceptedFiles={['application/pdf']}
                         previewText="Arquivos para assinar:"
+                        showAlerts={false}
                         showPreviews={false}
                         showPreviewsInDropzone={true}
                         showFileNames={true}
