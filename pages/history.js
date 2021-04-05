@@ -1,3 +1,4 @@
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -9,6 +10,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
+import { Wizard } from './wizard';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -55,16 +57,42 @@ const useStyles = makeStyles((theme) => ({
 
 export default function History() {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
+      <Dialog
+        fullWidth={true}
+        maxWidth="lg"
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="dialog-title"
+      >
+        <DialogTitle id="dialog-title">Assinar PDF</DialogTitle>
+        <DialogContent>
+          <Wizard />
+        </DialogContent>
+        <DialogActions>
+          
+        </DialogActions>
+      </Dialog>
+
+
       <Grid container className={classes.title}>
-        <Grid item sm={6}>
-          <h3>Execuções</h3>
+        <Grid item xs={6}>
+          <h2>Histórico</h2>
         </Grid>
-        <Grid item className={classes.alignRight} sm={6}>
-          <Button variant="contained" color="primary" href="/wizard" >
-            Novo
+        <Grid item className={classes.alignRight} xs={6}>
+          <Button variant="contained" color="secondary" onClick={handleClickOpen} >
+            Assinar PDF
           </Button>
         </Grid>
       </Grid>

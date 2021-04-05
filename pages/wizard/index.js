@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
     },
     backButton: {
-        backgroundColor: theme.palette.primary.dark,
         marginRight: theme.spacing(1),
     },
     instructions: {
@@ -53,48 +52,9 @@ function Page(props) {
     )
 }
 
-function Upload() {
+export function Wizard() {
     const classes = useStyles();
-     const [files, setFiles] = React.useState([]);
-
-    return (
-        <DropzoneArea
-            dialogTitle="Upload do PDF"
-            cancelButtonText="Cancelar"
-            submitButtonText="Enviar"
-            dropzoneText="Arraste um PDF aqui ou clique"
-            onChange={(files) => {
-                setFiles(files)
-            }}
-            acceptedFiles={['application/pdf']}
-            previewText="Arquivos para assinar:"
-            showPreviews={false}
-            showPreviewsInDropzone={true}
-            showFileNames={true}
-            showFileNamesInPreview={true}
-            filesLimit={1}
-            maxFileSize={5000000}
-        />
-    )
-}
-
-function getStepContent(stepIndex) {
-    switch (stepIndex) {
-        case 0:
-            return <Upload />;
-        case 1:
-            return 'What is an ad group anyways?';
-        case 2:
-            return 'This is the bit I really care about!';
-        case 2:
-            return 'All steps completed';
-        default:
-            return 'OPS...';
-    }
-}
-
-function Wizard() {
-    const classes = useStyles();
+    const [files, setFiles] = React.useState([]);
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
     const router = useRouter();
@@ -114,6 +74,50 @@ function Wizard() {
     const handleReset = () => {
         setActiveStep(0);
     };
+
+    const isNextDisabled = (activeStep) => {
+        if (activeStep == 0) {
+            return files.length == 0;
+        }
+        return false;
+    }
+
+    const getStepContent = (stepIndex) => {
+        switch (stepIndex) {
+            case 0:
+                return (
+                    <DropzoneArea
+                        dialogTitle="Upload do PDF"
+                        cancelButtonText="Cancelar"
+                        submitButtonText="Enviar"
+                        dropzoneText="Arraste um PDF aqui ou clique"
+                        onChange={(files) => {
+                            setFiles(files)
+                        }}
+                        acceptedFiles={['application/pdf']}
+                        previewText="Arquivos para assinar:"
+                        showPreviews={false}
+                        showPreviewsInDropzone={true}
+                        showFileNames={true}
+                        showFileNamesInPreview={true}
+                        filesLimit={1}
+                        maxFileSize={5000000}
+                        getFileAddedMessage={(fileName) => `Arquivo ${fileName} adicionado com sucesso.`}
+                        getFileLimitExceedMessage={(filesLimit) => `Número máximo de arquivos excedido. Escolha apenas ${filesLimit}`}
+                        getFileRemovedMessage={(fileName) => `Arquivo ${fileName} removido.`}
+                        getDropRejectMessage={(rejectedFile) => `Arquivo ${rejectedFile.name} não é válido.`}
+                    />
+                );
+            case 1:
+                return 'What is an ad group anyways?';
+            case 2:
+                return 'This is the bit I really care about!';
+            case 2:
+                return 'All steps completed';
+            default:
+                return 'OPS...';
+        }
+    }
 
     return (
         <div className={classes.root}>
@@ -135,24 +139,26 @@ function Wizard() {
                     </Button>
                 ) : (
                     <div className={classes.flex}>
-                        <div>
-                            <Button
-                                variant="contained"
-                                disabled={activeStep === 0}
-                                onClick={handleBack}
-                                className={classes.backButton}
-                            >
-                                Voltar
-                        </Button>
-                        </div>
                         <div className={classes.grow} />
-                        <div className={classes.alignRight}>
+                        {activeStep > 0 && (
+                            <div>
+                                <Button
+                                    variant="outlined"
+                                    color="secondary"
+                                    disabled={activeStep === 0}
+                                    onClick={handleBack}
+                                    className={classes.backButton}
+                                >
+                                    Voltar
+                                </Button>
+                            </div>)}
+                        <div>
                             {activeStep === steps.length - 1 ? (
-                                <Button variant="contained" color="primary" onClick={handleExecute}>
+                                <Button variant="contained" color="secondary" onClick={handleExecute}>
                                     Executar
                                 </Button>
                             ) : (
-                                <Button variant="contained" color="primary" onClick={handleNext}>
+                                <Button variant="contained" color="secondary" onClick={handleNext} disabled={isNextDisabled(activeStep)}>
                                     Próximo
                                 </Button>
                             )}

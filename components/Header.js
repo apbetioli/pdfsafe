@@ -1,4 +1,5 @@
 import {
+  Hidden,
   Link,
   List,
   ListItem,
@@ -17,6 +18,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { default as React } from 'react';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   toolbar: {
-    backgroundColor: theme.palette.primary.dark
+    backgroundColor: theme.palette.primary
   }
 }));
 
@@ -106,8 +108,8 @@ export default function Header() {
           </div>
 
           <Link className={classes.title} href="/" noWrap>
-            <Typography  variant="h6" noWrap>
-              PDF Assinator Tabajara
+            <Typography variant="h6" noWrap>
+              <VerifiedUserIcon/> PDF Assinator Tabajara
             </Typography>
           </Link>
 
@@ -119,6 +121,7 @@ export default function Header() {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            <Hidden smDown>
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -127,6 +130,7 @@ export default function Header() {
             >
               <AccountCircle />
             </IconButton>
+            </Hidden>
           </nav>
         </Toolbar>
       </AppBar>
