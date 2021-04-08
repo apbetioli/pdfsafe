@@ -1,15 +1,13 @@
 
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import { makeStyles } from '@material-ui/core/styles';
 import { DropzoneArea } from 'material-ui-dropzone';
-import { useRouter } from 'next/router';
 import React from 'react';
 import Layout from "../../components/Layout";
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     page: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
-        minHeight: 200
+        padding: theme.spacing(2),
+        minHeight: 250
     },
     alignRight: {
         textAlign: 'right'
@@ -35,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     },
     grow: {
         flexGrow: 1
+    },
+    dropzone: {
+        minHeight: 150
     }
 }));
 
@@ -42,25 +44,32 @@ function getSteps() {
     return ['Upload do PDF', 'Dados dos clientes', 'Executar'];
 }
 
-function Page(props) {
+function WizardPage(props) {
     const classes = useStyles();
 
     return (
-        <Paper className={classes.page}>
+        <div className={classes.page}>
             {props.children}
-        </Paper>
+        </div>
     )
 }
 
-export function Wizard() {
+export function Wizard({ onClose }) {
     const classes = useStyles();
     const [files, setFiles] = React.useState([]);
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
-    const router = useRouter();
+    const [importMode, setImportMode] = React.useState("manually");
 
-    const handleExecute = () => {
-        router.push("/?success=Sucesso!");
+    const handleChangeImportMode = (event) => {
+        setImportMode(event.target.value);
+    }
+
+    const handleExecute = (event) => {
+        if (onClose) {
+            event.message = 'Processando!';
+            onClose(event);
+        }
     };
 
     const handleNext = () => {
@@ -91,17 +100,18 @@ export function Wizard() {
                         cancelButtonText="Cancelar"
                         submitButtonText="Enviar"
                         dropzoneText="Arraste um PDF aqui ou clique"
-                        onChange={(files) => {
-                            setFiles(files)
-                        }}
+                        dropzoneClass={classes.dropzone}
+                        onChange={setFiles}
                         acceptedFiles={['application/pdf']}
-                        previewText="Arquivos para assinar:"
+                        previewText="Arquivo para assinar:"
                         showAlerts={false}
-                        showPreviews={false}
-                        showPreviewsInDropzone={true}
+                        showPreviews={true}
+                        showPreviewsInDropzone={false}
                         showFileNames={true}
                         showFileNamesInPreview={true}
+                        useChipsForPreview={true}
                         filesLimit={1}
+                        initialFiles={files}
                         maxFileSize={5000000}
                         getFileAddedMessage={(fileName) => `Arquivo ${fileName} adicionado com sucesso.`}
                         getFileLimitExceedMessage={(filesLimit) => `Número máximo de arquivos excedido. Escolha apenas ${filesLimit}`}
@@ -110,7 +120,18 @@ export function Wizard() {
                     />
                 );
             case 1:
-                return 'What is an ad group anyways?';
+                return (
+                    <>
+                        <FormControl component="fieldset">
+                            <FormLabel component="legend">Como deseja incluir os dados dos clientes?</FormLabel>
+                            <RadioGroup name="importMode" value={importMode} onChange={handleChangeImportMode}>
+                                <FormControlLabel value="manually" control={<Radio />} label="Manualmente" />
+                                <FormControlLabel value="import" control={<Radio />} label="Importar planilha" />
+                            </RadioGroup>
+                        </FormControl>
+
+                    </>
+                );
             case 2:
                 return 'This is the bit I really care about!';
             case 2:
@@ -130,9 +151,9 @@ export function Wizard() {
                 ))}
             </Stepper>
             <div>
-                <Page>
+                <WizardPage>
                     {getStepContent(activeStep)}
-                </Page>
+                </WizardPage>
 
                 {activeStep === steps.length ? (
                     <Button variant="contained" color="info" onClick={handleReset}>
@@ -156,7 +177,7 @@ export function Wizard() {
                         <div>
                             {activeStep === steps.length - 1 ? (
                                 <Button variant="contained" color="secondary" onClick={handleExecute}>
-                                    Executar
+                                    Assinar
                                 </Button>
                             ) : (
                                 <Button variant="contained" color="secondary" onClick={handleNext} disabled={isNextDisabled(activeStep)}>

@@ -14,11 +14,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import HomeIcon from "@material-ui/icons/Home";
 import MenuIcon from "@material-ui/icons/Menu";
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { default as React } from 'react';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+import { default as React } from 'react';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +91,7 @@ export default function Header() {
               <List component="nav">
                 <ListItemLink button href="/">
                   <ListItemIcon>
-                    <HomeIcon />
+                    <VerifiedUserIcon />
                   </ListItemIcon>
                   <ListItemText primary="Início" />
                 </ListItemLink>
@@ -109,27 +108,29 @@ export default function Header() {
 
           <Link className={classes.title} href="/" noWrap>
             <Typography variant="h6" noWrap>
-              <VerifiedUserIcon/> PDF Assinator Tabajara
+              <VerifiedUserIcon /> PDF Assinator Tabajara
             </Typography>
           </Link>
 
           <div className={classes.grow}></div>
 
           <nav className={classes.desktopButtons}>
-            <IconButton aria-label="show new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <Hidden xsUp>
+              <IconButton aria-label="show new notifications" color="inherit">
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+            </Hidden>
             <Hidden smDown>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
             </Hidden>
           </nav>
         </Toolbar>

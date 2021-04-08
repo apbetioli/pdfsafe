@@ -7,6 +7,7 @@ import React from "react";
 
 export default function App({ Component, pageProps }) {
   const title = (pageProps.title ? pageProps.title + " | " : "") + "PDF Safe";
+
   return (
     <React.Fragment>
       <Head>
