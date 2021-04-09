@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DropzoneArea } from 'material-ui-dropzone';
 import React from 'react';
 import Layout from "../../components/Layout";
+import ManualData from './manualdata';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,10 +55,11 @@ function WizardPage(props) {
     )
 }
 
-export function Wizard({ onClose }) {
+export function Wizard({ onClose, step }) {
     const classes = useStyles();
     const [files, setFiles] = React.useState([]);
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [spreadsheets, setSpreadsheets] = React.useState([]);
+    const [activeStep, setActiveStep] = React.useState(step | 0);
     const steps = getSteps();
     const [importMode, setImportMode] = React.useState("manually");
 
@@ -73,6 +75,9 @@ export function Wizard({ onClose }) {
     };
 
     const handleNext = () => {
+        if (activeStep == steps.length - 1) {
+            handleExecute();
+        }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
@@ -85,9 +90,12 @@ export function Wizard({ onClose }) {
     };
 
     const isNextDisabled = (activeStep) => {
-        if (activeStep == 0) {
+        if (activeStep == 0)
             return files.length == 0;
-        }
+        else if (activeStep == 2)
+            if (importMode != "manually")
+                return spreadsheets.length == 0
+
         return false;
     }
 
@@ -96,9 +104,6 @@ export function Wizard({ onClose }) {
             case 0:
                 return (
                     <DropzoneArea
-                        dialogTitle="Upload do PDF"
-                        cancelButtonText="Cancelar"
-                        submitButtonText="Enviar"
                         dropzoneText="Arraste um PDF aqui ou clique"
                         dropzoneClass={classes.dropzone}
                         onChange={setFiles}
@@ -126,16 +131,46 @@ export function Wizard({ onClose }) {
                             <FormLabel component="legend">Como deseja incluir os dados dos clientes?</FormLabel>
                             <RadioGroup name="importMode" value={importMode} onChange={handleChangeImportMode}>
                                 <FormControlLabel value="manually" control={<Radio />} label="Manualmente" />
-                                <FormControlLabel value="import" control={<Radio />} label="Importar planilha" />
+                                <FormControlLabel value="import" control={<Radio />} label="Importar planilha CSV" />
                             </RadioGroup>
                         </FormControl>
-
+                        <p>
+                            <a href="">Baixar modelo de planilha CSV</a>
+                        </p>
                     </>
                 );
-            case 2:
-                return 'This is the bit I really care about!';
-            case 2:
-                return 'All steps completed';
+            case 2: {
+                if (importMode === "manually")
+                    return (
+                        <ManualData />
+                    );
+                else {
+                    return (
+                        <>
+                            <DropzoneArea
+                                dropzoneText="Arraste uma planilha CSV aqui ou clique"
+                                dropzoneClass={classes.dropzone}
+                                onChange={setSpreadsheets}
+                                acceptedFiles={['.csv']}
+                                previewText="Planilha CSV carregado:"
+                                showAlerts={false}
+                                showPreviews={true}
+                                showPreviewsInDropzone={false}
+                                showFileNames={true}
+                                showFileNamesInPreview={true}
+                                useChipsForPreview={true}
+                                filesLimit={1}
+                                initialFiles={spreadsheets}
+                                maxFileSize={5000000}
+                                getFileAddedMessage={(fileName) => `Arquivo ${fileName} adicionado com sucesso.`}
+                                getFileLimitExceedMessage={(filesLimit) => `Número máximo de arquivos excedido. Escolha apenas ${filesLimit}`}
+                                getFileRemovedMessage={(fileName) => `Arquivo ${fileName} removido.`}
+                                getDropRejectMessage={(rejectedFile) => `Arquivo ${rejectedFile.name} não é válido.`}
+                            />
+                        </>
+                    )
+                }
+            }
             default:
                 return 'OPS...';
         }
@@ -155,39 +190,32 @@ export function Wizard({ onClose }) {
                     {getStepContent(activeStep)}
                 </WizardPage>
 
-                {activeStep === steps.length ? (
-                    <Button variant="contained" color="info" onClick={handleReset}>
-                        Começar um novo
-                    </Button>
-                ) : (
-                    <div className={classes.flex}>
-                        <div className={classes.grow} />
-                        {activeStep > 0 && (
-                            <div>
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    disabled={activeStep === 0}
-                                    onClick={handleBack}
-                                    className={classes.backButton}
-                                >
-                                    Voltar
-                                </Button>
-                            </div>)}
+                <div className={classes.flex}>
+                    <div className={classes.grow} />
+                    {activeStep > 0 && (
                         <div>
-                            {activeStep === steps.length - 1 ? (
-                                <Button variant="contained" color="secondary" onClick={handleExecute}>
-                                    Assinar
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                disabled={activeStep === 0}
+                                onClick={handleBack}
+                                className={classes.backButton}
+                            >
+                                Voltar
                                 </Button>
-                            ) : (
-                                <Button variant="contained" color="secondary" onClick={handleNext} disabled={isNextDisabled(activeStep)}>
-                                    Próximo
-                                </Button>
-                            )}
-
-                        </div>
+                        </div>)}
+                    <div>
+                        {activeStep === steps.length - 1 ? (
+                            <Button variant="contained" color="secondary" onClick={handleExecute} disabled={isNextDisabled(activeStep)}>
+                                Assinar
+                            </Button>
+                        ) : (
+                            <Button variant="contained" color="secondary" onClick={handleNext} disabled={isNextDisabled(activeStep)}>
+                                Próximo
+                            </Button>
+                        )}
                     </div>
-                )}
+                </div>
 
             </div>
         </div >

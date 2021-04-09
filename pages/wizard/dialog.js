@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogContent, makeStyles } from "@material-ui/core";
+import { Button, Dialog, DialogActions, DialogContent, makeStyles } from "@material-ui/core";
 import React from "react";
 import { Wizard } from ".";
 
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function WizardDialog(props) {
     const classes = useStyles();
+
     return (
         <Dialog
             fullWidth={true}

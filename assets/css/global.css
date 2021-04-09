@@ -31,3 +31,7 @@ input[type='number'] {
 .MuiStepIcon-root.MuiStepIcon-completed {
   color: #4caf50 !important;
 }
+
+.MuiStepper-root {
+  padding: 0 24px !important;
+}

@@ -103,7 +103,7 @@ export default function History(props) {
         </Grid>
         <Grid item className={classes.alignRight} xs={6}>
           <Button variant="contained" color="secondary" onClick={handleOpenDialog} >
-            Assinar PDF
+            Assinar Novo PDF
           </Button>
         </Grid>
       </Grid>
