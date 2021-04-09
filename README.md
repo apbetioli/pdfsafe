@@ -1,12 +1,20 @@
 # PDF Safe
 
-A service for signing a sold PDF document to avoid piracy, and send it by email direct to the client.
+A service for watermarking a PDF document to avoid piracy
 
 ## Features
 
-- Signs a PDF document with name, document and email
-- Sends the signed PDF document to the email address provided
+- Watermarks a PDF document with name, document and email
+- Sends the watermarked PDF document to the email address provided
 - Allow batch processing
+
+## Stack
+
+- Next.js
+- Material-UI
+- MongoDB
+- Serverless API
+- Deployed on Vercel
 
 ## Environment variables
 
