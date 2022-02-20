@@ -18,29 +18,24 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { default as React } from 'react';
+import { Theme } from "@mui/system";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   listItem: {
-    paddingRight: theme.spacing(5),
+    paddingRight: 25,
   },
   grow: {
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: 10,
   },
   title: {
     color: 'white',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
-    },
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
     },
   },
   sectionMobile: {
@@ -72,7 +67,7 @@ export default function Header() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar className={classes.toolbar}>
-          <div className={classes.leftButtons}>
+          <div className={classes.menuButton}>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
@@ -114,7 +109,7 @@ export default function Header() {
 
           <div className={classes.grow}></div>
 
-          <nav className={classes.desktopButtons}>
+          <nav className={classes.menuButton}>
             <Hidden xsUp>
               <IconButton aria-label="show new notifications" color="inherit">
                 <Badge badgeContent={17} color="secondary">

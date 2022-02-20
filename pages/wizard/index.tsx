@@ -15,16 +15,16 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
     },
     backButton: {
-        marginRight: theme.spacing(1),
+        marginRight: 5,
     },
     instructions: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
+        marginTop: 5,
+        marginBottom: 5,
     },
     page: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
-        padding: theme.spacing(2),
+        marginTop: 5,
+        marginBottom: 5,
+        padding: 10,
         minHeight: 250
     },
     alignRight: {
@@ -55,7 +55,7 @@ function WizardPage(props) {
     )
 }
 
-export function Wizard({ onClose, step }) {
+export function Wizard({ onClose = undefined, step = 0 }) {
     const classes = useStyles();
     const [files, setFiles] = React.useState([]);
     const [spreadsheets, setSpreadsheets] = React.useState([]);
@@ -74,9 +74,9 @@ export function Wizard({ onClose, step }) {
         }
     };
 
-    const handleNext = () => {
+    const handleNext = (event) => {
         if (activeStep == steps.length - 1) {
-            handleExecute();
+            handleExecute(event);
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -222,10 +222,10 @@ export function Wizard({ onClose, step }) {
     );
 }
 
-export default function WizardIndex() {
+export default function WizardIndex(props) {
     return (
         <Layout>
-            <Wizard />
+            <Wizard  />
         </Layout>
     )
 }
