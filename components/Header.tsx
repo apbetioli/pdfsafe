@@ -40,12 +40,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   sectionMobile: {
     display: 'flex',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       display: 'none',
     },
   },
   toolbar: {
-    backgroundColor: theme.palette.primary
+    backgroundColor: "#5163BA"
   }
 }));
 
@@ -103,7 +103,7 @@ export default function Header() {
 
           <Link className={classes.title} href="/" noWrap>
             <Typography variant="h6" noWrap>
-              <VerifiedUserIcon /> PDF Assinator Tabajara
+              <VerifiedUserIcon /> <span id="title">PDF Assinator Tabajara</span>
             </Typography>
           </Link>
 

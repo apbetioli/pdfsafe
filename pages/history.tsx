@@ -15,8 +15,8 @@ import WizardDialog from './wizard/dialog';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
+    backgroundColor: "#5163BA",
+    color: "#FFFFFF"
   },
   body: {
     fontSize: 14,
@@ -26,7 +26,7 @@ const StyledTableCell = withStyles((theme) => ({
 const StyledTableRow = withStyles((theme) => ({
   root: {
     '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
+      backgroundColor: "#FAFAFA"
     },
   },
 }))(TableRow);
