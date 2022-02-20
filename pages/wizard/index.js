@@ -1,12 +1,12 @@
 
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Stepper from '@material-ui/core/Stepper';
-import { makeStyles } from '@material-ui/core/styles';
-import { DropzoneArea } from 'material-ui-dropzone';
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material';
+import Button from '@mui/material/Button';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import { makeStyles } from '@mui/styles';
 import React from 'react';
+import { DropzoneArea } from 'react-mui-dropzone';
 import Layout from "../../components/Layout";
 import ManualData from './manualdata';
 
@@ -202,7 +202,7 @@ export function Wizard({ onClose, step }) {
                                 className={classes.backButton}
                             >
                                 Voltar
-                                </Button>
+                            </Button>
                         </div>)}
                     <div>
                         {activeStep === steps.length - 1 ? (

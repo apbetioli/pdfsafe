@@ -5,18 +5,18 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText
-} from "@material-ui/core";
-import AppBar from '@material-ui/core/AppBar';
-import Badge from '@material-ui/core/Badge';
-import Drawer from '@material-ui/core/Drawer';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuIcon from "@material-ui/icons/Menu";
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+} from "@mui/material";
+import AppBar from '@mui/material/AppBar';
+import Badge from '@mui/material/Badge';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import { makeStyles } from "@mui/styles";
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuIcon from "@mui/icons-material/Menu";
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { default as React } from 'react';
 
 

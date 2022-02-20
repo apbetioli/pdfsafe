@@ -1,6 +1,8 @@
-import { Button, Dialog, DialogActions, DialogContent, makeStyles } from "@material-ui/core";
+import { Button, Dialog, DialogContent } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import React from "react";
 import { Wizard } from ".";
+
 
 const useStyles = makeStyles((theme) => ({
     grow: {
